@@ -15,9 +15,7 @@ app.secret_key = "colm"
 api = Api(app)
 
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+
 
 jwt = JWT(app, authenticate, identity) #JWT class creates a new endpoint /auth, when we call /auth we send it a username and password that is used in authenticate and identity.
 
