@@ -3,7 +3,7 @@ from flask_jwt import jwt_required
 from models.item import ItemModel
 
 
-class Item(Resource): #Our new Item class inherits from Resource, we don't have to use jsonify because the Resource class does it.
+class Item(Resource):       #Our new Item class inherits from Resource, we don't have to use jsonify because the Resource class does it.
     parser = reqparse.RequestParser()
     parser.add_argument('price',
         type=float,
@@ -17,7 +17,7 @@ class Item(Resource): #Our new Item class inherits from Resource, we don't have 
     )
     
     
-    @jwt_required() #decorator, it means we have to authenticate before we can call the get method.
+    @jwt_required()     #Decorator, it means we have to authenticate before we can call the get method.
     def get(self, name):
         item = ItemModel.find_by_name(name)
         if item:
@@ -27,7 +27,7 @@ class Item(Resource): #Our new Item class inherits from Resource, we don't have 
        
         
     def post(self, name):
-        if ItemModel.find_by_name(name):  #Could also call it by Item.find_by_name(name) as it's a class method.
+        if ItemModel.find_by_name(name):        
             return {'Message': 'An item with name {}, already exists'.format(name)}, 400
             
         data = Item.parser.parse_args()
@@ -36,7 +36,7 @@ class Item(Resource): #Our new Item class inherits from Resource, we don't have 
         try:
             item.save_to_db()
         except:
-            return {'message': 'An error occurred inserting the item.'}, 500  #Internal server error, something went wrong but it's not your fault.
+            return {'message': 'An error occurred inserting the item.'}, 500  
             
         return item.json(), 201
         
@@ -56,7 +56,7 @@ class Item(Resource): #Our new Item class inherits from Resource, we don't have 
         
         
         if item is None:
-            item = ItemModel(name, **data)  #data['price'], data['store_id'] can be simplified to **data
+            item = ItemModel(name, **data)  #data['price'], data['store_id'] can be simplified to **data, kwargs.
         else:
             item.price = data['price']
             

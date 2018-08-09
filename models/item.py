@@ -1,9 +1,9 @@
 from db import db
 
-class ItemModel(db.Model):
-    __tablename__ = "items"
+class ItemModel(db.Model):      #Creates a mapping between the database and the objects
+    __tablename__ = "items"     #We've to tell sqlalchemy the table name where these models will be saved.
     
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)        #We've to tell it what columns the table will have cotain.
     name = db.Column(db.String(80))
     price = db.Column(db.Float(precision=2))
     
@@ -20,7 +20,7 @@ class ItemModel(db.Model):
         
     @classmethod
     def find_by_name(cls, name):   
-        return ItemModel.query.filter_by(name=name).first()   #Could also do cls.query
+        return ItemModel.query.filter_by(name=name).first()   #The sql command is built into this, this return an ItemModel object.
             
     
     def save_to_db(self):
